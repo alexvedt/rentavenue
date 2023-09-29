@@ -38,6 +38,12 @@ const profilesRoute = new Route({
 
 const profileRoute = new Route({
   getParentRoute: () => rootRoute,
+  path: "/profiles/$profileId",
+  component: ProfilesPage,
+});
+
+const myProfileRoute = new Route({
+  getParentRoute: () => rootRoute,
   path: "/profile",
   component: ProfilePage,
 });
@@ -58,6 +64,7 @@ const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
   profilesRoute,
+  myProfileRoute,
   profileRoute,
   postsRoute,
   postRoute,
