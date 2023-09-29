@@ -1,3 +1,7 @@
+/**
+ * Displays a list of profiles
+ * @see https://docs.noroff.dev/social-endpoints/profiles
+ */
 export default function ProfilesPage() {
   return (
     <>

@@ -7,14 +7,24 @@ const initialPostState = {
   id: null,
 };
 
+/**
+ * Displays a single post
+ * @see https://docs.noroff.dev/social-endpoints/posts
+ */
 export default function PostPage() {
   const [post, setPost] = useState(initialPostState);
 
   useEffect(() => {
     const fetchData = async () => {
-      // TIP: Get the ID from the search params in the URL
-      // TIP: Fetch the post from the API using the ID
-      // TIP: Set the post in state
+      try {
+        // TIP: Get the ID from the search params in the URL
+        // TIP: Fetch the post from the API using the ID
+        // TIP: Set the post in state
+      } catch (error) {
+        // TIP: Handle errors from the API
+      } finally {
+        // TIP: Set loading to false
+      }
     };
 
     fetchData();
