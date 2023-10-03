@@ -12,6 +12,8 @@ const rootRoute = new RootRoute({
   component: Root,
 });
 
+// NOTE: @see https://tanstack.com/router/v1/docs/guide/routes
+
 const indexRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/",
