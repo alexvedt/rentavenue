@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../lib/constants";
+import Navigation from "../components/navbar";
 
 /**
  * @typedef {import('../lib/types.js').PostModel} Post
@@ -56,6 +57,9 @@ export default function HomePage() {
 
   return (
     <>
+      <header>
+        <Navigation />
+      </header>
       <h1>Index/ Home Page</h1>
 
       <section>

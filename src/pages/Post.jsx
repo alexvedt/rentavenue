@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Navigation from "../components/navbar";
 
 const initialPostState = {
   title: "No post found",
@@ -32,6 +33,9 @@ export default function PostPage() {
 
   return (
     <>
+      <header>
+        <Navigation />
+      </header>
       <h1>A single post</h1>
       <section>
         <h2>{post?.title}</h2>
