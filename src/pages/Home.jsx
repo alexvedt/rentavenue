@@ -35,10 +35,6 @@ function App() {
         <ShuffleHero />
         <Modal />
       </main>
-
-      <footer>
-        <small>Created with ❤️ by You</small>
-      </footer>
     </>
   );
 }

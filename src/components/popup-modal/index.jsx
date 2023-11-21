@@ -1,7 +1,7 @@
 // Modal.jsx
 
 import { useEffect, useState } from "react";
-import "./Modal.css"; // Import the CSS file for styling
+import "./modal.css"; // Import the CSS file for styling
 
 const Modal = () => {
   const [isInitialRender, setIsInitialRender] = useState(true);

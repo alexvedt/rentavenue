@@ -10,7 +10,7 @@ const ShuffleHero = () => {
           marketZ
         </span>
         <h3 className="text-4xl md:text-6xl font-semibold">
-          Lets sell some items
+          Let´s sell some items
         </h3>
         <p className="text-base md:text-lg text-slate-700 my-4 md:my-6">
           MarketZ: Empowering users with seamless access to dynamic markets,
