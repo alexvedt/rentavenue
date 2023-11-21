@@ -2,6 +2,7 @@
  * Displays a single profile
  * @see https://docs.noroff.dev/social-endpoints/profiles
  */
+import Profile from "../components/profile";
 import Navigation from "../components/navbar";
 export default function ProfilePage() {
   return (
@@ -9,7 +10,9 @@ export default function ProfilePage() {
       <header>
         <Navigation />
       </header>
-      <h1>Profile Page</h1>
+      <main>
+        <Profile />
+      </main>
     </>
   );
 }
