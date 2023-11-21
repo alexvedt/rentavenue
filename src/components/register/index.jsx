@@ -26,7 +26,7 @@ function RegisterForm() {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
-    const { email, password, name } = event.target.elements;
+    const { email, password, name, avatar } = event.target.elements;
 
     let fieldErrors = {};
 
@@ -53,6 +53,7 @@ function RegisterForm() {
       name: name.value,
       email: email.value,
       password: password.value,
+      avatar: avatar.value,
     };
 
     setIsLoading(true);
@@ -73,6 +74,7 @@ function RegisterForm() {
       if (response.ok) {
         setIsSuccess(true);
         localStorage.setItem("email", email.value);
+        localStorage.setItem("avatar", avatar.value);
         navigateToHome();
       } else {
         setError({ general: data.message });
@@ -158,6 +160,25 @@ function RegisterForm() {
               {error.email && (
                 <p className="text-red-500 text-xs mt-2">{error.email}</p>
               )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="avatar"
+                className="block text-sm font-medium leading-6 text-custom-aqua"
+              >
+                Avatar Link (Optional)
+              </label>
+
+              <div className="mt-2">
+                <input
+                  id="avatar"
+                  name="avatar"
+                  type="text"
+                  autoComplete="avatar"
+                  className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
             </div>
 
             <div>

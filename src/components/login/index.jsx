@@ -59,6 +59,8 @@ function LoginForm() {
 
       localStorage.setItem("access_token", data.accessToken);
       localStorage.setItem("user_name", data.name);
+      localStorage.setItem("credits", data.credits);
+      localStorage.setItem("avatar", data.avatar);
       console.log(
         "Access Token in Local Storage:",
         localStorage.getItem("access_token")

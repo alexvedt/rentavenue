@@ -4,8 +4,6 @@ import "./App.css";
 function App() {
   return (
     <>
-      <header></header>
-
       <main>
         <Outlet />
       </main>
