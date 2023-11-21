@@ -1,68 +1,42 @@
-import { useEffect, useState } from "react";
-import { API_URL } from "../lib/constants";
+// App.js
 
-/**
- * @typedef {import('../lib/types.js').PostModel} Post
- */
+import { useState } from "react";
+import { Outlet } from "@tanstack/react-router";
+import Navigation from "../components/navbar";
+import "../App.css";
 
-/**
- * Home Page displays a list of posts
- * @see https://docs.noroff.dev/social-endpoints/posts
- */
-export default function HomePage() {
-  /** @type {[Post[], React.Dispatch<Data>]} */
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+function App() {
+  const [isLoggedIn, setLoggedIn] =
+    useState(/* Your logic to determine login status */);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setIsLoading(true);
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
 
-        const accessToken = localStorage.getItem("jwt");
-
-        const url = new URL(`${API_URL}/posts`);
-        url.searchParams.append("_author", "true");
-        url.searchParams.append("_comments", "true");
-        url.searchParams.append("_reactions", "true");
-
-        const response = await fetch(url.href, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-
-        const data = await response.json();
-
-        setPosts(data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  if (isLoading) return <h1>Loading...</h1>;
-
-  if (error) return <h1>Something went wrong! {error?.message}</h1>;
+  const handleLogout = () => {
+    // Your logout logic
+    setLoggedIn(false);
+  };
 
   return (
     <>
-      <h1>Index/ Home Page</h1>
+      <header>
+        <Navigation
+          isLoggedIn={isLoggedIn}
+          onLogin={handleLogin}
+          onLogout={handleLogout}
+        />
+      </header>
 
-      <section>
-        {posts.map((post) => (
-          <div key={post.id}>{post?.title}</div>
-        ))}
-      </section>
+      <main>
+        <Outlet />
+      </main>
+
+      <footer>
+        <small>Created with ❤️ by You</small>
+      </footer>
     </>
   );
 }
+
+export default App;

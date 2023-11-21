@@ -9,7 +9,6 @@ export const API_URL =
 export const NAVIGATION = [
   { label: "Home", href: "/" },
   { label: "Profile", href: "/profile" },
-  { label: "Profiles", href: "/profiles" },
-  { label: "Posts", href: "/posts" },
+  { label: "Register", href: "/register" },
   { label: "Login", href: "/login" },
 ];
