@@ -84,14 +84,14 @@ function LoginForm() {
   if (error.general) return <div>An error occurred: {error.general}</div>;
 
   return (
-    <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 bg-custom lg:px-8 card w-full max-w-[100%] h-[300px] md:h-auto  glass">
+    <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 bg-background lg:px-8 card w-full max-w-[100%] h-[300px] md:h-auto  glass">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="w-auto h-10 mx-auto"
-          src="../src/assets/NoHoverLogo.svg"
+          src="https://cdn.worldvectorlogo.com/logos/random.svg"
           alt="Your Company"
         />
-        <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-custom-aqua">
+        <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-text-100">
           Sign in to your account
         </h2>
       </div>
@@ -144,7 +144,6 @@ function LoginForm() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  defaultValue="UzI1NiIsInR5cCI"
                   className="block w-full rounded-md border-0 px-1 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

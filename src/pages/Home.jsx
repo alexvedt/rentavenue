@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Outlet } from "@tanstack/react-router";
 import Navigation from "../components/navbar";
 import "../App.css";
+import ShuffleHero from "../components/explore-hero";
+import Modal from "../components/popup-modal";
 
 function App() {
   const [isLoggedIn, setLoggedIn] =
@@ -28,8 +30,10 @@ function App() {
         />
       </header>
 
-      <main>
+      <main className="w-full px-8 py-12 items-center gap-8 max-w-6xl mx-auto">
         <Outlet />
+        <ShuffleHero />
+        <Modal />
       </main>
 
       <footer>

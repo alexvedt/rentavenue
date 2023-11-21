@@ -55,3 +55,9 @@ main {
 footer {
   grid-area: footer;
 }
+
+.menu li > *:not(ul):not(.menu-title):not(details):active,
+.menu li > *:not(ul):not(.menu-title):not(details).active,
+.menu li > details > summary:active {
+  background-color: #252525;
+}
