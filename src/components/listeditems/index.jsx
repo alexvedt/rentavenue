@@ -72,37 +72,40 @@ export default function FetchListings() {
       {error && <p>Error: {error.message}</p>}
 
       <div className="listing-container flex flex-wrap gap-8 justify-center">
-        {listings.map(({ id, title, media, description, endsAt, seller }) => (
-          <div
-            key={id}
-            className="listing-item w-72 text-center md:w-1/4 border-2 border-solid rounded-lg border-x-my-black"
-          >
-            {media && (
-              <img
-                src={media}
-                className="object-cover w-full h-40"
-                alt="listing-image"
-                onError={(e) => {
-                  e.target.src =
-                    "https://source.unsplash.com/300x200/?placeholder";
-                }}
-              />
-            )}
-            <h2>{title}</h2>
-            <div>
-              <p>{description}</p>
+        {listings.map(
+          ({ id, title, media, description, endsAt, seller, tags }) => (
+            <div
+              key={id}
+              className="listing-item w-72 text-center md:w-1/4 border-2 border-solid rounded-lg border-x-my-black"
+            >
+              {media && (
+                <img
+                  src={media}
+                  className="object-cover w-full h-40"
+                  alt={title}
+                  onError={(e) => {
+                    e.target.src =
+                      "https://source.unsplash.com/300x200/?placeholder";
+                  }}
+                />
+              )}
+              <h2>{title}</h2>
+              <div>
+                <p>{description}</p>
+              </div>
+              <p>Deadline: {endsAt}</p>
+              <p>Seller: {seller.name} </p>
+              <p>Tags: {tags}</p>
+              <div>
+                <Link to={`/listingitem/${id}?id=${id}`}>
+                  <button className="rounded-xl bg-cta-color py-1 px-2 font-semibold my-2">
+                    View Listing
+                  </button>
+                </Link>
+              </div>
             </div>
-            <p>Deadline: {endsAt}</p>
-            <p>Seller: {seller.name} </p>
-            <div>
-              <Link to={`/listingitem/${id}?id=${id}`}>
-                <button className="rounded-xl bg-cta-color py-1 px-2 font-semibold my-2">
-                  View Listing
-                </button>
-              </Link>
-            </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </div>
   );
