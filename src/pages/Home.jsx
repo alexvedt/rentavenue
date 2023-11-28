@@ -6,6 +6,7 @@ import Navigation from "../components/navbar";
 import "../App.css";
 import ShuffleHero from "../components/explore-hero";
 import Modal from "../components/popup-modal";
+import FetchListings from "../components/listeditems";
 
 function App() {
   const [isLoggedIn, setLoggedIn] =
@@ -34,6 +35,7 @@ function App() {
         <Outlet />
         <ShuffleHero />
         <Modal />
+        <FetchListings />
       </main>
     </>
   );

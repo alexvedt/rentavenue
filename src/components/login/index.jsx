@@ -91,7 +91,7 @@ function LoginForm() {
           src="https://cdn.worldvectorlogo.com/logos/random.svg"
           alt="Your Company"
         />
-        <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-text-100">
+        <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-accent-500">
           Sign in to your account
         </h2>
       </div>

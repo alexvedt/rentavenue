@@ -11,4 +11,5 @@ export const NAVIGATION = [
   { label: "Profile", href: "/profile" },
   { label: "Register", href: "/register" },
   { label: "Login", href: "/login" },
+  { label: "Listing", href: "/listing" },
 ];

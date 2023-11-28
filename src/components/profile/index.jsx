@@ -45,6 +45,8 @@ export default function Profile() {
           <p>Name: {user.name}</p>
           <p>Email: {user.email}</p>
           <p>Credits: {user.credits}</p>
+          <p>Listings: {user._count.listings}</p>
+          <p>Wins: {user.wins}</p>
           {/* Add more fields as needed */}
         </div>
       ) : (
