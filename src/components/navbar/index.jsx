@@ -101,13 +101,10 @@ const Navigation = () => {
       <div className="navbar-end">
         <Link to={"/profile"}>
           <div className="avatar">
-            <p>Credits{userCredits}</p>
             <div className="w-8 rounded-full">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/A-Cat.jpg/800px-A-Cat.jpg"
-                alt="User Avatar"
-              />
+              <img src="" alt="User Avatar" />
             </div>
+            <p>Credits{userCredits}</p>
           </div>
         </Link>
       </div>
