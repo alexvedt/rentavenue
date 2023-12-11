@@ -16,10 +16,12 @@ export default function FetchListings() {
     const fetchListings = async () => {
       try {
         setIsLoading(true);
-        setError(null); // Reset error state before making the request
+        setError(null);
 
         const accessToken = localStorage.getItem("access_token");
-        const url = new URL(`${API_URL}/listings`);
+        const url = new URL(
+          `${API_URL}/listings?&_active=true&sort=created&order=desc`
+        );
 
         url.searchParams.append("_seller", "true");
         url.searchParams.append("_bids", "true");
@@ -32,10 +34,29 @@ export default function FetchListings() {
 
         const listings = await listingResponse.json();
         console.log(listings, "listings");
-
         console.log(listings);
 
-        const filteredListings = listings.filter((listing) => {
+        // Format the endsAt date
+        const formattedListings = listings.map((listing) => {
+          return {
+            ...listing,
+            endsAt: new Date(listing.endsAt).toLocaleString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "numeric",
+              minute: "numeric",
+              hour12: false,
+            }),
+          };
+        });
+
+        // Sort the listings by created field
+        const sortedListings = formattedListings.sort(
+          (a, b) => new Date(b.created) - new Date(a.created)
+        );
+
+        const filteredListings = sortedListings.filter((listing) => {
           return listing.title
             .toLowerCase()
             .includes(searchInput.toLowerCase());

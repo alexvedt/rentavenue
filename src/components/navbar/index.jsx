@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import handleLogout from "../logout";
+import money from "../../assets/money.png";
 
 const Navigation = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -102,9 +103,9 @@ const Navigation = () => {
         <Link to={"/profile"}>
           <div className="avatar">
             <div className="w-8 rounded-full">
-              <img src="" alt="User Avatar" />
+              <img src={money} alt="User Avatar" />
             </div>
-            <p>Credits{userCredits}</p>
+            <p>{userCredits}</p>
           </div>
         </Link>
       </div>

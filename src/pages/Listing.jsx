@@ -5,7 +5,7 @@ import ListingItem from "../components/single-listing";
  * Displays a single post
  * @see https://docs.noroff.dev/social-endpoints/posts
  */
-export default function PostPage() {
+export default function SingleItem() {
   return (
     <>
       <header>
