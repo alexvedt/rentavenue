@@ -33,7 +33,6 @@ export default function ListingItem() {
         }),
       };
 
-      // Place bid using fetch
       const bidResponse = await fetch(apiUrl, options);
       console.log(bidResponse, "bidResponse");
 
@@ -41,21 +40,15 @@ export default function ListingItem() {
         const errorData = await bidResponse.json();
         console.error("Error placing bid:", errorData);
 
-        // Handle the error, show a message, etc.
-        // You can access specific error details from errorData.errors array
         return;
       }
       const bidData = await bidResponse.json();
 
-      // Handle the bid response, if needed
       console.log("Bid response:", bidData);
 
-      // Close the modal after a successful bid
       closeModal();
     } catch (error) {
-      // Handle errors from the bid logic
       console.error("Error placing bid:", error);
-      // You may want to set an error state or display an error message to the user
     }
   };
 
@@ -95,7 +88,6 @@ export default function ListingItem() {
     <div className="container mx-auto flex items-center justify-center h-screen">
       <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
         <div className="p-4 md:p-12 text-center lg:text-left">
-          {/* Image for mobile view */}
           <div
             className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
             style={{
@@ -122,7 +114,6 @@ export default function ListingItem() {
             <p>Posted by: {listing.seller?.name || "Unknown Seller"}</p>
             <button onClick={openModal}>Place Bid</button>
 
-            {/* Modal for placing bid */}
             {isModalOpen && (
               <div className="modal-container">
                 <dialog className="modal modal-bottom sm:modal-middle" open>
