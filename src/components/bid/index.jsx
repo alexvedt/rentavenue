@@ -32,7 +32,14 @@ const BidButton = () => {
       // Place bid using fetch
       const bidResponse = await fetch(apiUrl, options);
       const bidData = await bidResponse.json();
+      console.log("Bid placed successfully:", bidResponse);
 
+      const currentCredits = parseInt(localStorage.getItem("credits")) || 0;
+      const newCredits = currentCredits - bidAmount;
+      localStorage.setItem("credits", newCredits);
+      console.log("Current Credits:", currentCredits);
+      console.log("Bid Amount:", bidAmount);
+      console.log("New Credits:", newCredits);
       // Handle the bid response, if needed
       console.log("Bid response:", bidData);
 
@@ -41,7 +48,6 @@ const BidButton = () => {
     } catch (error) {
       // Handle errors from the bid logic
       console.error("Error placing bid:", error);
-      // You may want to set an error state or display an error message to the user
     }
   };
 

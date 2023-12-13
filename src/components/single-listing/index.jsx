@@ -29,7 +29,7 @@ export default function ListingItem() {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
         body: JSON.stringify({
-          amount: bidAmount,
+          amount: Number(bidAmount),
         }),
       };
 
@@ -84,6 +84,11 @@ export default function ListingItem() {
   if (isLoading) return <h1>Loading...</h1>;
   if (error) return <h1>No listing found. {error?.message}</h1>;
 
+  const latestBidAmount =
+    listing?.bids?.length > 0
+      ? Math.max(...listing.bids.map((bid) => bid.amount))
+      : 0;
+
   return (
     <div className="container mx-auto flex items-center justify-center h-screen">
       <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
@@ -111,7 +116,7 @@ export default function ListingItem() {
                 />
               )}
             </div>
-            <p>Posted by: {listing.seller?.name || "Unknown Seller"}</p>
+            <p>Posted by: {listing?.seller?.name || "Unknown Seller"}</p>
             <button onClick={openModal}>Place Bid</button>
 
             {isModalOpen && (
@@ -125,12 +130,16 @@ export default function ListingItem() {
                         type="number"
                         value={bidAmount}
                         onChange={(e) => setBidAmount(e.target.value)}
+                        placeholder={`Must be higher than ${latestBidAmount}`}
+                        className="input w-full max-w-xs"
                       />
                     </label>
-                    <button onClick={handleBid}>Submit Bid</button>
 
                     <div className="modal-action">
                       <form method="dialog">
+                        <button className="btn" onClick={handleBid}>
+                          Submit Bid
+                        </button>
                         <button className="btn" onClick={closeModal}>
                           Close
                         </button>
@@ -141,6 +150,16 @@ export default function ListingItem() {
               </div>
             )}
           </div>
+          {/* Display additional information in descending order */}
+          <p>Ends At: {listing?.endsAt}</p>
+          <p>Updated: {listing?.updated}</p>
+          <p>Created: {listing?.created}</p>
+          <p>Description: {listing?.description}</p>
+          <p>Title: {listing?.title}</p>
+          <p>ID: {listing?.id}</p>
+          <p>Latest Bid Amount: {latestBidAmount}</p>
+
+          {/* Display additional information in descending order */}
         </div>
       </div>
     </div>
