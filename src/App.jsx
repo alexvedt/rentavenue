@@ -8,8 +8,8 @@ function App() {
         <Outlet />
       </main>
 
-      <footer>
-        <small>Created with ❤️ by You</small>
+      <footer className="text-center">
+        <small>All rights reserved</small>
       </footer>
     </>
   );

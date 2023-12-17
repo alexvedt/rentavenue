@@ -36,7 +36,6 @@ export default function FetchListings() {
         console.log(listings, "listings");
         console.log(listings);
 
-        // Format the endsAt date
         const formattedListings = listings.map((listing) => {
           return {
             ...listing,
@@ -51,7 +50,6 @@ export default function FetchListings() {
           };
         });
 
-        // Sort the listings by created field
         const sortedListings = formattedListings.sort(
           (a, b) => new Date(b.created) - new Date(a.created)
         );
@@ -75,10 +73,6 @@ export default function FetchListings() {
 
   return (
     <div>
-      <div className="parent-hero-banner bg-nav-color w-full max-h-60 pb-2 flex justify-between">
-        {/* (rest of the code remains unchanged) */}
-      </div>
-
       <div className="search-bar-container mt-4 mb-8">
         <input
           type="text"
@@ -89,7 +83,15 @@ export default function FetchListings() {
         />
       </div>
 
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <>
+          <div className="skeleton listing-container">
+            <div className="flex flex-col gap-4 w-52">
+              <div className="skeleton h-4 w-full"></div>
+            </div>
+          </div>
+        </>
+      )}
       {error && <p>Error: {error.message}</p>}
 
       <div className="listing-container flex flex-wrap gap-8 justify-center">
@@ -97,7 +99,7 @@ export default function FetchListings() {
           ({ id, title, media, description, endsAt, seller, tags }) => (
             <div
               key={id}
-              className="listing-item w-72 text-center md:w-1/4 border-2 border-solid rounded-lg border-x-my-black"
+              className="listing-item w-72 text-center md:w-1/4 border-solid rounded-lg card-bordered"
             >
               {media && (
                 <img
