@@ -9,15 +9,13 @@ import Modal from "../components/popup-modal";
 import FetchListings from "../components/listeditems";
 
 function App() {
-  const [isLoggedIn, setLoggedIn] =
-    useState(/* Your logic to determine login status */);
+  const [isLoggedIn, setLoggedIn] = useState();
 
   const handleLogin = () => {
     setLoggedIn(true);
   };
 
   const handleLogout = () => {
-    // Your logout logic
     setLoggedIn(false);
   };
 
