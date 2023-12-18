@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { API_URL } from "../../lib/constants";
+import UserProfileDetails from "../user-tabs";
 
 const Profile = () => {
   const userId = localStorage.getItem("user_name");
@@ -33,78 +34,84 @@ const Profile = () => {
   }, [userId]);
 
   return (
-    <div className="container mx-auto flex items-center justify-center h-screen">
-      <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
-        <div className="p-4 md:p-12 text-center lg:text-left">
-          {/* Image for mobile view */}
-          <div
-            className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
-            style={{
-              backgroundImage: `url('${
-                user?.avatar || "https://source.unsplash.com/MP0IUfwrn0A"
-              }')`,
-            }}
-          ></div>
+    <>
+      <div className="container mx-auto flex items-center justify-center h-screen">
+        <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
+          <div className="p-4 md:p-12 text-center lg:text-left">
+            {/* Image for mobile view */}
+            <div
+              className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
+              style={{
+                backgroundImage: `url('${
+                  user?.avatar || "https://source.unsplash.com/MP0IUfwrn0A"
+                }')`,
+              }}
+            ></div>
 
-          <h1 className="text-3xl font-bold pt-8 lg:pt-0">{user?.name}</h1>
-          <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
-          <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
-            <svg
-              className="h-4 fill-current text-green-700 pr-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              {/* ... (your path) */}
-            </svg>{" "}
-            {user?.occupation}
-          </p>
+            <h1 className="text-3xl font-bold pt-8 lg:pt-0">{user?.name}</h1>
+            <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
+            <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
+              <svg
+                className="h-4 fill-current text-green-700 pr-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                {/* ... (your path) */}
+              </svg>{" "}
+              {user?.occupation}
+            </p>
 
-          {/* User Profile Information */}
-          {user ? (
-            <div>
-              <h1>Profile Information</h1>
-              <div className="avatar-container flex rounded-full w-28 bg-blue-500 justify-center">
-                {user.avatar && (
-                  <img
-                    src={user.avatar}
-                    alt="Avatar"
-                    className="justify-center"
-                  />
-                )}
+            {/* User Profile Information */}
+            {user ? (
+              <div>
+                <h1>Profile Information</h1>
+                <div className="avatar-container flex rounded-full w-28 bg-blue-500 justify-center">
+                  {user.avatar && (
+                    <img
+                      src={user.avatar}
+                      alt="Avatar"
+                      className="justify-center"
+                    />
+                  )}
+                </div>
+                <p>Name: {user.name}</p>
+                <p>Email: {user.email}</p>
+                <p>Credits: {user.credits}</p>
+                <p>Listings: {user._count.listings.id}</p>
+                <p>Wins: {user.wins}</p>
+                {/* Add more fields as needed */}
               </div>
-              <p>Name: {user.name}</p>
-              <p>Email: {user.email}</p>
-              <p>Credits: {user.credits}</p>
-              <p>Listings: {user._count.listings.id}</p>
-              <p>Wins: {user.wins}</p>
-              {/* Add more fields as needed */}
+            ) : (
+              <p>Loading user profile...</p>
+            )}
+
+            <div className="pt-12 pb-8">
+              <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
+                Get In Touch
+              </button>
             </div>
-          ) : (
-            <p>Loading user profile...</p>
-          )}
 
-          <div className="pt-12 pb-8">
-            <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
-              Get In Touch
-            </button>
+            <div className="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
+              {/* Social media links */}
+              {/* ... */}
+            </div>
           </div>
+        </div>
 
-          <div className="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
-            {/* Social media links */}
-            {/* ... */}
-          </div>
+        {/* Big profile image for side bar (desktop) */}
+        <div className="w-full lg:w-2/5">
+          <img
+            src={user?.avatar || "https://source.unsplash.com/MP0IUfwrn0A"}
+            className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
+            alt="Profile"
+          />
         </div>
       </div>
 
-      {/* Big profile image for side bar (desktop) */}
-      <div className="w-full lg:w-2/5">
-        <img
-          src={user?.avatar || "https://source.unsplash.com/MP0IUfwrn0A"}
-          className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
-          alt="Profile"
-        />
+      <div className="container mx-auto flex items-center">
+        <UserProfileDetails />
       </div>
-    </div>
+    </>
   );
 };
 
