@@ -59,9 +59,10 @@ export default function ListingItem() {
         const url = new URL(`${API_URL}/listings/${listingId}`);
         url.searchParams.append("_seller", "true");
         url.searchParams.append("_bids", "true");
-        const response = await fetch(`${url}`, {
+
+        const response = await fetch(url.href, {
           headers: {
-            authorization: `bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
 
@@ -69,7 +70,29 @@ export default function ListingItem() {
           setError({ message: "Listing not found" });
         } else {
           const data = await response.json();
-          setListing(data);
+
+          // Convert endsAt time to a formatted string
+          const formattedListing = {
+            ...data,
+            endsAt: new Date(data.endsAt).toLocaleString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "numeric",
+              minute: "numeric",
+              hour12: false,
+            }),
+            created: new Date(data.created).toLocaleString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "numeric",
+              minute: "numeric",
+              hour12: false,
+            }),
+          };
+
+          setListing(formattedListing);
         }
       } catch (error) {
         setError(error);
@@ -90,78 +113,85 @@ export default function ListingItem() {
       : 0;
 
   return (
-    <div className="container mx-auto flex items-center justify-center h-screen">
-      <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
-        <div className="p-4 md:p-12 text-center lg:text-left">
-          <div
-            className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
-            style={{
-              backgroundImage: `url('${
-                listing?.media[0] || "https://source.unsplash.com/MP0IUfwrn0A"
-              }')`,
-            }}
-          ></div>
+    <>
+      <div className="container mx-auto flex items-center justify-center h-screen">
+        <div className="w-full lg:w-2/5">
+          <img
+            src={listing?.media[0] || "https://source.unsplash.com/MP0IUfwrn0A"}
+            className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
+            alt="Profile"
+          />
+        </div>
+        <div className="w-full  lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
+          <div className="p-4 md:p-12 text-center lg:text-left">
+            <div
+              className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
+              style={{
+                backgroundImage: `url('${
+                  listing?.media[0] || "https://source.unsplash.com/MP0IUfwrn0A"
+                }')`,
+              }}
+            ></div>
 
-          <h1 className="text-3xl font-bold pt-8 lg:pt-0">
-            {listing?.title || "Unknown Title"}
-          </h1>
-          <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
-          <div className="flex flex-col items-center">
-            <div className="avatar-container flex rounded-full w-28 bg-blue-500 justify-center">
-              {listing?.seller?.avatar && (
-                <img
-                  src={listing.seller.avatar}
-                  alt="Seller Avatar"
-                  className="justify-center"
-                />
+            <h1 className="text-3xl font-bold pt-8 lg:pt-0">
+              {listing?.title || "Unknown Title"}
+            </h1>
+            <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
+            <div className="flex flex-col items-center">
+              <div className="avatar-container flex rounded-full w-28 bg-blue-500 justify-center">
+                {listing?.seller?.avatar && (
+                  <img
+                    src={listing.seller.avatar}
+                    alt="Seller Avatar"
+                    className="justify-center"
+                  />
+                )}
+              </div>
+              <p>Seller: {listing?.seller?.name || "Unknown Seller"}</p>
+
+              {isModalOpen && (
+                <div className="modal-container">
+                  <dialog className="modal modal-bottom sm:modal-middle" open>
+                    <div className="modal-box">
+                      <h3 className="font-bold text-lg">Place Bid</h3>
+                      <label>
+                        Bid Amount:
+                        <input
+                          type="number"
+                          value={bidAmount}
+                          onChange={(e) => setBidAmount(e.target.value)}
+                          placeholder={`Must be higher than ${latestBidAmount}`}
+                          className="input w-full max-w-xs"
+                        />
+                      </label>
+
+                      <div className="modal-action">
+                        <form method="dialog">
+                          <button className="btn" onClick={handleBid}>
+                            Submit Bid
+                          </button>
+                          <button className="btn" onClick={closeModal}>
+                            Close
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>
+                </div>
               )}
             </div>
-            <p>Posted by: {listing?.seller?.name || "Unknown Seller"}</p>
-            <button onClick={openModal}>Place Bid</button>
-
-            {isModalOpen && (
-              <div className="modal-container">
-                <dialog className="modal modal-bottom sm:modal-middle" open>
-                  <div className="modal-box">
-                    <h3 className="font-bold text-lg">Place Bid</h3>
-                    <label>
-                      Bid Amount:
-                      <input
-                        type="number"
-                        value={bidAmount}
-                        onChange={(e) => setBidAmount(e.target.value)}
-                        placeholder={`Must be higher than ${latestBidAmount}`}
-                        className="input w-full max-w-xs"
-                      />
-                    </label>
-
-                    <div className="modal-action">
-                      <form method="dialog">
-                        <button className="btn" onClick={handleBid}>
-                          Submit Bid
-                        </button>
-                        <button className="btn" onClick={closeModal}>
-                          Close
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                </dialog>
-              </div>
-            )}
+            <div className="card prose">
+              <p>Created: {listing?.created}</p>
+              <p>Ends At: {listing?.endsAt}</p>
+              <p>Description: {listing?.description}</p>
+              <p>Leading bid: {latestBidAmount}</p>
+              <button className="btn bg-primary-500" onClick={openModal}>
+                Place Bid
+              </button>
+            </div>
           </div>
-          {/* Display additional information in descending order */}
-          <p>Ends At: {listing?.endsAt}</p>
-          <p>Updated: {listing?.updated}</p>
-          <p>Created: {listing?.created}</p>
-          <p>Description: {listing?.description}</p>
-          <p>Title: {listing?.title}</p>
-          <p>ID: {listing?.id}</p>
-          <p>Latest Bid Amount: {latestBidAmount}</p>
-
-          {/* Display additional information in descending order */}
         </div>
       </div>
-    </div>
+    </>
   );
 }

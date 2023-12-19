@@ -40,6 +40,7 @@ const Profile = () => {
           <div className="p-4 md:p-12 text-center lg:text-left">
             {/* Image for mobile view */}
             <div
+              alt="Profile image"
               className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
               style={{
                 backgroundImage: `url('${
@@ -55,30 +56,20 @@ const Profile = () => {
                 className="h-4 fill-current text-green-700 pr-4"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
-              >
-                {/* ... (your path) */}
-              </svg>{" "}
+              ></svg>{" "}
               {user?.occupation}
             </p>
 
-            {/* User Profile Information */}
             {user ? (
               <div>
                 <h1>Profile Information</h1>
-                <div className="avatar-container flex rounded-full w-28 bg-blue-500 justify-center">
-                  {user.avatar && (
-                    <img
-                      src={user.avatar}
-                      alt="Avatar"
-                      className="justify-center"
-                    />
-                  )}
-                </div>
                 <p>Name: {user.name}</p>
-                <p>Email: {user.email}</p>
+                <p>
+                  About me: Lorem ipsum dolor sit, amet consectetur adipisicing
+                  elit. Repudiandae, distinctio?
+                </p>
                 <p>Credits: {user.credits}</p>
                 <p>Listings: {user._count.listings.id}</p>
-                <p>Wins: {user.wins}</p>
                 {/* Add more fields as needed */}
               </div>
             ) : (

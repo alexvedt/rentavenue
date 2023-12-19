@@ -4,10 +4,13 @@ import { API_URL } from "../../lib/constants";
 const BidButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bidAmount, setBidAmount] = useState(0);
-  const [listingId, setListingId] = useState(""); // New state for listingId
+  const [listingId, setListingId] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [isSuccessfulBid, setIsSuccessfulBid] = useState(true);
+  const [toastMessage, setToastMessage] = useState("");
 
   const openModal = (id) => {
-    setListingId(id); // Set the listingId when opening the modal
+    setListingId(id);
     setIsModalOpen(true);
   };
 
@@ -31,29 +34,29 @@ const BidButton = () => {
 
       // Place bid using fetch
       const bidResponse = await fetch(apiUrl, options);
-      const bidData = await bidResponse.json();
-      console.log("Bid placed successfully:", bidResponse);
-
+      console.log(bidResponse);
       const currentCredits = parseInt(localStorage.getItem("credits")) || 0;
       const newCredits = currentCredits - bidAmount;
       localStorage.setItem("credits", newCredits);
-      console.log("Current Credits:", currentCredits);
-      console.log("Bid Amount:", bidAmount);
-      console.log("New Credits:", newCredits);
-      // Handle the bid response, if needed
-      console.log("Bid response:", bidData);
 
-      // Close the modal after a successful bid
+      setShowToast(true);
+      setIsSuccessfulBid(true);
+      setToastMessage("Bid successfully placed!");
       closeModal();
     } catch (error) {
-      // Handle errors from the bid logic
       console.error("Error placing bid:", error);
+      setIsSuccessfulBid(false);
+      setToastMessage("Bid error. Please try again.");
+    } finally {
+      setTimeout(() => {
+        setShowToast(true);
+      }, 3000);
     }
   };
 
   return (
     <div>
-      <button onClick={() => openModal("your-listing-id")}>Place Bid</button>
+      <button onClick={() => openModal(listingId)}>Place Bid</button>
 
       {/* Modal for placing bid */}
       {isModalOpen && (
@@ -80,6 +83,18 @@ const BidButton = () => {
               </div>
             </div>
           </dialog>
+        </div>
+      )}
+
+      {showToast && (
+        <div
+          className={`toast-top toast-end ${
+            isSuccessfulBid ? "alert-info" : "alert-error"
+          }`}
+        >
+          <div className="alert">
+            <span>{toastMessage}</span>
+          </div>
         </div>
       )}
     </div>

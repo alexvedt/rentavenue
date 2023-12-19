@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { API_URL } from "../../lib/constants";
+import { Link } from "@tanstack/react-router";
 
 const UserProfileDetails = () => {
   const userId = localStorage.getItem("user_name");
@@ -90,6 +91,11 @@ const UserProfileDetails = () => {
                 <p className="text-sm">Seller: {listing.seller.name}</p>
                 <p className="text-sm">Tags: {listing.tags.join(", ")}</p>
               </div>
+              <Link to={`/listingitem/${listing.id}?id=${listing.id}`}>
+                <button className="rounded-xl bg-cta-color py-1 px-2 font-semibold my-2">
+                  View Listing
+                </button>
+              </Link>
             </div>
           ))}
         </div>
