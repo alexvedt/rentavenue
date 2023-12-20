@@ -2,6 +2,31 @@ import { useEffect, useState } from "react";
 import { API_URL } from "../../lib/constants";
 import { useParams } from "@tanstack/react-router";
 
+const formatRemainingTime = (endsAt) => {
+  const currentTime = new Date();
+  const endTime = new Date(endsAt);
+  const timeDifference = endTime - currentTime;
+
+  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+  let formattedTime = "";
+  if (days > 0) {
+    formattedTime += `${days} days `;
+  }
+  if (hours > 0) {
+    formattedTime += `${hours} hours `;
+  }
+  if (minutes > 0) {
+    formattedTime += `${minutes} minutes`;
+  }
+
+  return formattedTime.trim();
+};
+
 export default function ListingItem() {
   const [listing, setListing] = useState();
   const [error, setError] = useState(null);
@@ -18,7 +43,6 @@ export default function ListingItem() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
   const handleBid = async () => {
     try {
       const apiUrl = `${API_URL}/listings/${listingId}/bids`;
@@ -111,6 +135,9 @@ export default function ListingItem() {
     listing?.bids?.length > 0
       ? Math.max(...listing.bids.map((bid) => bid.amount))
       : 0;
+  const getRemainingTime = () => {
+    return formatRemainingTime(listing?.endsAt);
+  };
 
   return (
     <>
@@ -133,12 +160,12 @@ export default function ListingItem() {
               }}
             ></div>
 
-            <h1 className="text-3xl font-bold pt-8 lg:pt-0">
+            <h1 className="text-3xl font-bold pt-8 lg:pt-0 text-center uppercase">
               {listing?.title || "Unknown Title"}
             </h1>
-            <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
+            <div className="mx-auto lg:mx-0 pt-3 border-b-2 border-green-500 opacity-25"></div>
             <div className="flex flex-col items-center">
-              <div className="avatar-container flex rounded-full w-28 bg-blue-500 justify-center">
+              <div className="avatar-container  flex rounded-full w-28 bg-blue-500 justify-center">
                 {listing?.seller?.avatar && (
                   <img
                     src={listing.seller.avatar}
@@ -180,14 +207,21 @@ export default function ListingItem() {
                 </div>
               )}
             </div>
-            <div className="card prose">
-              <p>Created: {listing?.created}</p>
-              <p>Ends At: {listing?.endsAt}</p>
-              <p>Description: {listing?.description}</p>
-              <p>Leading bid: {latestBidAmount}</p>
-              <button className="btn bg-primary-500" onClick={openModal}>
+            <div className="card prose p-4 border rounded-lg shadow-lg text-center">
+              <p className="mb-4">{listing?.description}</p>
+              <div className="flex flex-row">
+                <p className="text-lg font-semibold mb-2">
+                  Leading bid: $ {latestBidAmount}
+                </p>
+              </div>
+
+              <button
+                className="btn bg-text-500 text-white py-2 px-4 rounded-full"
+                onClick={openModal}
+              >
                 Place Bid
               </button>
+              <p className="mt-4">Ends in {getRemainingTime()}</p>
             </div>
           </div>
         </div>

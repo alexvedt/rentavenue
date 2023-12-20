@@ -7,6 +7,7 @@ import "../App.css";
 import ShuffleHero from "../components/explore-hero";
 import Modal from "../components/popup-modal";
 import FetchListings from "../components/listeditems";
+import ListingModal from "../components/listing-modal";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState();
@@ -32,6 +33,7 @@ function App() {
       <main className="w-full px-8 py-12 items-center gap-8 max-w-6xl mx-auto">
         <Outlet />
         <ShuffleHero />
+        <ListingModal />
         <Modal />
         <FetchListings />
       </main>
