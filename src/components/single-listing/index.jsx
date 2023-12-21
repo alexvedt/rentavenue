@@ -216,7 +216,7 @@ export default function ListingItem() {
               </div>
 
               <button
-                className="btn bg-text-500 text-white py-2 px-4 rounded-full"
+                className="btn bg-text-500 text-text-900 py-2 px-4 rounded-full"
                 onClick={openModal}
               >
                 Place Bid

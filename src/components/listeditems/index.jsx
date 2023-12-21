@@ -73,60 +73,59 @@ export default function FetchListings() {
 
   return (
     <div>
-      <div className="parent-hero-banner bg-nav-color w-full max-h-60 pb-2 flex justify-between">
-        {/* (rest of the code remains unchanged) */}
-      </div>
-
       <div className="search-bar-container mt-4 mb-8">
         <input
           type="text"
           placeholder="Search by title"
           value={searchInput}
           onChange={handleSearchInputChange}
-          className="p-2 border border-solid rounded-md w-64 md:w-96"
+          className="p-2 border border-solid border-text-500 rounded-md w-64 md:w-96"
         />
       </div>
 
-      {loading && <p>Loading...</p>}
+      {loading && <p className="text-center">Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-
+      <div className="parent-hero-banner bg-nav-color w-full max-h-60 pb-2 flex justify-between">
+        <h1>Latest listings</h1>{" "}
+      </div>
       <div className="flex flex-wrap gap-8 justify-center">
-        {listings.map(
-          ({ id, title, media, description, endsAt, seller, tags }) => (
-            <div
-              key={id}
-              className=" listing-item w-72 text-center md:w-1/4 border-2 border-solid rounded-lg border-x-my-black"
-            >
-              {media && (
-                <img
-                  src={media}
-                  className="object-cover w-full h-40"
-                  alt={title}
-                  onError={(e) => {
-                    e.target.src =
-                      "https://source.unsplash.com/300x200/?placeholder";
-                  }}
-                />
-              )}
-              <h2 className="h2">{title}</h2>
-              <div>
+        {listings.map(({ id, title, media, description, endsAt, seller }) => (
+          <div
+            key={id}
+            className="listing-item w-72 text-center md:w-1/4 border-2 border-solid rounded-lg border-text-500 h-96 md:h-auto flex flex-col"
+          >
+            {media && (
+              <img
+                src={media}
+                className="object-cover w-full h-40 rounded-t-lg"
+                alt={title}
+                onError={(e) => {
+                  e.target.src =
+                    "https://source.unsplash.com/300x200/?placeholder";
+                }}
+              />
+            )}
+            <h2 className="h2 uppercase pt-2 pb-4 font-bold">{title}</h2>
+            <div className="overflow-y-auto max-h-40 flex-grow line-clamp-3 overflow-hidden">
+              {description ? (
                 <p className="p">{description}</p>
-              </div>
-              <p>Seller: {seller.name} </p>
-              <p>Tags: {tags}</p>
-              <p>Deadline: {endsAt}</p>
-              <p>Seller: {seller.name} </p>
-
-              <div>
-                <Link to={`/listingitem/${id}?id=${id}`}>
-                  <button className="rounded-xl bg-cta-color py-1 px-2 font-semibold my-2">
-                    View Listing
-                  </button>
-                </Link>
-              </div>
+              ) : (
+                <p>
+                  Looks like there is no description of the item being sold.
+                </p>
+              )}{" "}
             </div>
-          )
-        )}
+            <p>Seller: {seller.name} </p>
+            <div className="mt-auto pb-3">
+              <Link to={`/listingitem/${id}?id=${id}`}>
+                <button className="btn py-1 px-2 font-semibold mt-2  bg-text-500 text-text-900 hover:text-text-100">
+                  View Listing
+                </button>
+              </Link>
+              <p className="pt-2">Deadline: {endsAt}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
