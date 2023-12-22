@@ -82,12 +82,15 @@ const CreateListingModal = () => {
       window.location.reload(true); // Reload the page
     }
   };
+  const hasAccessToken = !!localStorage.getItem("access_token");
 
   return (
     <div>
-      <button className="btn" onClick={openModal}>
-        Create Listing
-      </button>
+      {hasAccessToken && (
+        <button className="btn" onClick={openModal}>
+          Create Listing
+        </button>
+      )}
       {isModalOpen && (
         <div className="modal-container">
           <dialog className="modal modal-middle sm:modal-middle" open>
@@ -159,21 +162,21 @@ const CreateListingModal = () => {
                     className="mt-1 p-2 w-full border rounded-md"
                   />
                 </div>
+                <div className="modal-action">
+                  <button
+                    type="submit"
+                    className={`btn text-my-black rounded-lg p-2 font-semibold transition ${
+                      isListingCreated ? "bg-success-green" : ""
+                    }`}
+                    disabled={loading}
+                  >
+                    {isListingCreated ? "Listing Created" : "Create Listing"}
+                  </button>{" "}
+                  <button className="btn" onClick={closeModal}>
+                    Close
+                  </button>
+                </div>
               </form>
-              <div className="modal-action">
-                <button
-                  type="submit"
-                  className={`btn text-my-black rounded-lg p-2 font-semibold transition ${
-                    isListingCreated ? "bg-success-green" : ""
-                  }`}
-                  disabled={loading}
-                >
-                  {isListingCreated ? "Listing Created" : "Create Listing"}
-                </button>{" "}
-                <button className="btn" onClick={closeModal}>
-                  Close
-                </button>
-              </div>
             </div>
           </dialog>
         </div>

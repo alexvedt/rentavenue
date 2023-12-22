@@ -162,9 +162,9 @@ export default function ListingItem() {
             <h1 className="text-3xl font-bold pt-8 lg:pt-0 text-center uppercase">
               {listing?.title || "Unknown Title"}
             </h1>
-            <div className="mx-auto lg:mx-0 pt-3 border-b-2 border-green-500 opacity-25"></div>
+            <div className="mx-auto lg:mx-0 pt-3s border-b-2 border-text-500 opacity-25"></div>
             <div className="flex flex-col items-center">
-              <div className="avatar-container  flex rounded-full w-28 bg-blue-500 justify-center">
+              <div className=" flex rounded-full w-28  justify-center">
                 {listing?.seller?.avatar && (
                   <img
                     src={listing.seller.avatar}
@@ -173,7 +173,9 @@ export default function ListingItem() {
                   />
                 )}
               </div>
-              <p>Seller: {listing?.seller?.name || "Unknown Seller"}</p>
+              <p className="pt-2">
+                Seller: {listing?.seller?.name || "Unknown Seller"}
+              </p>
 
               {isModalOpen && (
                 <div className="modal-container">
@@ -206,7 +208,7 @@ export default function ListingItem() {
                 </div>
               )}
             </div>
-            <div className="card p-4 border rounded-lg shadow-lg text-center">
+            <div className="card p-4 rounded-lg shadow-lg text-center">
               <p className="mb-4">{listing?.description}</p>
               <div className="flex flex-row">
                 <p className="text-lg font-semibold mb-2">
