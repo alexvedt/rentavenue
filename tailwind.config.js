@@ -72,11 +72,7 @@ export default {
       },
     },
 
-    extend: {
-      fontFamily: {
-        cursive: ["cursive"],
-      },
-    },
+    extend: {},
   },
   plugins: [daisyui],
 };

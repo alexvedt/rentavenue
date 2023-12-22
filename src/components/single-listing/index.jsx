@@ -95,7 +95,6 @@ export default function ListingItem() {
         } else {
           const data = await response.json();
 
-          // Convert endsAt time to a formatted string
           const formattedListing = {
             ...data,
             endsAt: new Date(data.endsAt).toLocaleString("en-US", {
@@ -178,7 +177,7 @@ export default function ListingItem() {
 
               {isModalOpen && (
                 <div className="modal-container">
-                  <dialog className="modal modal-bottom sm:modal-middle" open>
+                  <dialog className="modal modal-middle sm:modal-middle" open>
                     <div className="modal-box">
                       <h3 className="font-bold text-lg">Place Bid</h3>
                       <label>
@@ -207,7 +206,7 @@ export default function ListingItem() {
                 </div>
               )}
             </div>
-            <div className="card prose p-4 border rounded-lg shadow-lg text-center">
+            <div className="card p-4 border rounded-lg shadow-lg text-center">
               <p className="mb-4">{listing?.description}</p>
               <div className="flex flex-row">
                 <p className="text-lg font-semibold mb-2">

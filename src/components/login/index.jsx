@@ -1,5 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import logo from "../../assets/logo.jpg";
 
 function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -86,11 +87,7 @@ function LoginForm() {
   return (
     <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 bg-background lg:px-8 card w-full max-w-[100%] h-[300px] md:h-auto   glass">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="w-auto h-10 mx-auto"
-          src="https://cdn.worldvectorlogo.com/logos/random.svg"
-          alt="Your Company"
-        />
+        <img className="w-auto h-10 mx-auto" src={logo} alt="markedZ" />
         <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-accent-500">
           Sign in to your account
         </h2>

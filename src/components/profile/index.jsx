@@ -27,7 +27,6 @@ const Profile = () => {
       }
     };
 
-    // Check if the user is logged in and has a stored user ID before fetching the profile
     if (userId) {
       fetchUserProfile();
     }
@@ -49,8 +48,10 @@ const Profile = () => {
               }}
             ></div>
 
-            <h1 className="text-3xl font-bold pt-8 lg:pt-0">{user?.name}</h1>
-            <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
+            <h1 className="text-3xl font-bold pt-8 lg:pt-0 uppercase text-center">
+              Profile information
+            </h1>
+            <div className="mx-auto lg:mx-0  pt-3 border-b-2 border-green-500 opacity-25"></div>
             <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
               <svg
                 className="h-4 fill-current text-green-700 pr-4"
@@ -62,34 +63,20 @@ const Profile = () => {
 
             {user ? (
               <div>
-                <h1>Profile Information</h1>
-                <p>Name: {user.name}</p>
-                <p>
-                  About me: Lorem ipsum dolor sit, amet consectetur adipisicing
-                  elit. Repudiandae, distinctio?
+                <h1 className="uppercase text-center">About</h1>
+                <p className="pb-2">Name: {user.name}</p>
+                <p className="pb-2">
+                  Looks like this API does not provide an about section yet
                 </p>
-                <p>Credits: {user.credits}</p>
+                <p className="pb-2">Credits: {user.credits}</p>
                 <p>Listings: {user._count.listings.id}</p>
-                {/* Add more fields as needed */}
               </div>
             ) : (
               <p>Loading user profile...</p>
             )}
-
-            <div className="pt-12 pb-8">
-              <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
-                Get In Touch
-              </button>
-            </div>
-
-            <div className="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
-              {/* Social media links */}
-              {/* ... */}
-            </div>
           </div>
         </div>
 
-        {/* Big profile image for side bar (desktop) */}
         <div className="w-full lg:w-2/5">
           <img
             src={user?.avatar || "https://source.unsplash.com/MP0IUfwrn0A"}

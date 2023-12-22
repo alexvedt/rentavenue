@@ -62,11 +62,9 @@ const UserProfileDetails = () => {
         role="tab"
         className="tab"
         aria-label="Listings"
+        checked
       />
-      <div
-        role="tabpanel"
-        className="tab-content bg-base-100 border-base-300 rounded-box p-6"
-      >
+      <div role="tabpanel" className="tab-content bg-base-100  rounded-box p-6">
         <div className="flex flex-wrap gap-8 justify-center">
           {userListings.map((listing) => (
             <div
@@ -92,7 +90,7 @@ const UserProfileDetails = () => {
                 <p className="text-sm">Tags: {listing.tags.join(", ")}</p>
               </div>
               <Link to={`/listingitem/${listing.id}?id=${listing.id}`}>
-                <button className="rounded-xl bg-cta-color py-1 px-2 font-semibold my-2">
+                <button className=" btn  bg-cta-color py-1 px-2 font-semibold my-2  bg-text-500 text-text-900 hover:text-text-100">
                   View Listing
                 </button>
               </Link>
@@ -106,7 +104,6 @@ const UserProfileDetails = () => {
         role="tab"
         className="tab"
         aria-label="Bids"
-        checked
       />
       <div
         role="tabpanel"

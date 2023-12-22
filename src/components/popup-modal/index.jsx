@@ -1,7 +1,7 @@
 // Modal.jsx
 
 import { useEffect, useState } from "react";
-import "./modal.css"; // Import the CSS file for styling
+import "./modal.css";
 
 const Modal = () => {
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -10,22 +10,19 @@ const Modal = () => {
   useEffect(() => {
     const storedToken = localStorage.getItem("access_token");
 
-    // If it's the initial render and the access token is not found, show the modal
     if (isInitialRender && !storedToken) {
       setIsModalVisible(true);
     }
 
-    // Update the state to indicate that the initial render is complete
     setIsInitialRender(false);
   }, [isInitialRender]);
 
   if (!isModalVisible) {
-    return null; // If access_token is found or the initial render is complete, don't render the modal
+    return null;
   }
 
   return (
     <div className="modal-container">
-      {/* Other modal content */}
       <dialog className="modal modal-bottom sm:modal-middle" open>
         <div className="modal-box">
           <h3 className="font-bold text-lg">Hello!</h3>

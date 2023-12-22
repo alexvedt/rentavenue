@@ -72,14 +72,14 @@ export default function FetchListings() {
   }, [searchInput]);
 
   return (
-    <div>
+    <section role="listings">
       <div className="search-bar-container mt-4 mb-8">
         <input
           type="text"
           placeholder="Search by title"
           value={searchInput}
           onChange={handleSearchInputChange}
-          className="p-2 border border-solid border-text-500 rounded-md w-64 md:w-96"
+          className="p-2 border border-solid border-text-100 rounded-md w-64 md:w-96"
         />
       </div>
 
@@ -92,7 +92,7 @@ export default function FetchListings() {
         {listings.map(({ id, title, media, description, endsAt, seller }) => (
           <div
             key={id}
-            className="listing-item w-72 text-center md:w-1/4 border-2 border-solid rounded-lg border-text-500 h-96 md:h-auto flex flex-col"
+            className="listing-item w-72 text-center md:w-1/4 border-2 border-solid rounded-lg border-text-100 h-96 md:h-auto flex flex-col"
           >
             {media && (
               <img
@@ -127,6 +127,6 @@ export default function FetchListings() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

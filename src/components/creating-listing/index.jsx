@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { API_URL } from "../../lib/constants";
-import PropTypes from "prop-types";
 
-const CreateListing = ({ onClose }) => {
+const CreateListingModal = () => {
   const date = new Date();
   const [formData, setFormData] = useState({
     title: "",
@@ -13,6 +12,15 @@ const CreateListing = ({ onClose }) => {
 
   const [isListingCreated, setListingCreated] = useState(false);
   const [loading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -70,95 +78,108 @@ const CreateListing = ({ onClose }) => {
       console.error("An error occurred during form submission:", error);
     } finally {
       setIsLoading(false);
-      onClose(); // Close the modal after submission
+      closeModal(); // Close the modal after submission
+      window.location.reload(true); // Reload the page
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-8 bg-white rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Create Listing</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-            required
-          />
+    <div>
+      <button className="btn" onClick={openModal}>
+        Create Listing
+      </button>
+      {isModalOpen && (
+        <div className="modal-container">
+          <dialog className="modal modal-middle sm:modal-middle" open>
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Create Listing</h3>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                  <label
+                    htmlFor="title"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    className="mt-1 p-2 w-full border rounded-md"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="deadline"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Deadline
+                  </label>
+                  <input
+                    type="date"
+                    name="endsAt"
+                    value={formData.endsAt}
+                    onChange={handleChange}
+                    className="mt-1 p-2 w-full border rounded-md"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="media"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Media URL
+                  </label>
+                  <input
+                    type="text"
+                    id="media"
+                    name="media"
+                    value={formData.media}
+                    onChange={handleChange}
+                    className="mt-1 p-2 w-full border rounded-md"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows="4"
+                    className="mt-1 p-2 w-full border rounded-md"
+                  />
+                </div>
+              </form>
+              <div className="modal-action">
+                <button
+                  type="submit"
+                  className={`btn text-my-black rounded-lg p-2 font-semibold transition ${
+                    isListingCreated ? "bg-success-green" : ""
+                  }`}
+                  disabled={loading}
+                >
+                  {isListingCreated ? "Listing Created" : "Create Listing"}
+                </button>{" "}
+                <button className="btn" onClick={closeModal}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </dialog>
         </div>
-        <div className="mb-4">
-          <label
-            htmlFor="deadline"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Deadline
-          </label>
-          <input
-            type="date"
-            name="endsAt"
-            value={formData.endsAt}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="media"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Media URL
-          </label>
-          <input
-            type="text"
-            id="media"
-            name="media"
-            value={formData.media}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows="4"
-            className="mt-1 p-2 w-full border rounded-md"
-          />
-        </div>
-        <button
-          type="submit"
-          className={`bg-cta-color text-my-black rounded-lg p-2 font-semibold transition ${
-            isListingCreated ? "bg-success-green" : ""
-          }`}
-          disabled={loading}
-        >
-          {isListingCreated ? "Listing Created" : "Create Listing"}
-        </button>{" "}
-      </form>
+      )}
     </div>
   );
 };
 
-CreateListing.propTypes = {
-  onClose: PropTypes.func,
-};
-
-export default CreateListing;
+export default CreateListingModal;
