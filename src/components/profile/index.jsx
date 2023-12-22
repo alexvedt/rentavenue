@@ -19,8 +19,6 @@ const Profile = () => {
           const userData = await response.json();
           console.log("userData:", userData);
           setUser(userData);
-        } else {
-          // Handle error (e.g., token expired, unauthorized)
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);

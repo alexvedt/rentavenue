@@ -41,7 +41,6 @@ const BidButton = () => {
       console.log("New Credits:", newCredits);
       console.log("Bid response:", bidData);
 
-      // Close the modal after a successful bid
       closeModal();
     } catch (error) {
       closeModal();

@@ -1,8 +1,44 @@
-# React + Vite
+# Vite + React + Daisy UI + Tailwind CSS Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a front-end exam using Vite, React, Daisy UI, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You can view the demo of this project at [Demo Link](https://your-demo-link.com).
+
+## Project Setup
+
+### Prerequisites
+
+Make sure you have the following installed on your machine:
+
+- Node.js: [Download Node.js](https://nodejs.org/)
+- npm: This comes with Node.js installation.
+
+### Installation
+
+git clone https://github.com/your-username/your-project.git
+cd your-project
+npm install
+
+
+### Development
+To run the project in development mode:
+npm run dev
+This will generate a dist directory with the production-ready code and serve it locally.
+
+
+
+### Build and Serve
+
+To build the project for production and preview the production build:
+npm run build
+npm run serve
+This will generate a dist directory with the production-ready code and serve it locally.
+
+### Project Structure
+
+src/: Contains the source code for the project.
+components/: React components.
+styles/: Stylesheets.
+App.jsx: Main application component.

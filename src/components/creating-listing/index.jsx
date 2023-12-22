@@ -78,8 +78,8 @@ const CreateListingModal = () => {
       console.error("An error occurred during form submission:", error);
     } finally {
       setIsLoading(false);
-      closeModal(); // Close the modal after submission
-      window.location.reload(true); // Reload the page
+      closeModal();
+      window.location.reload(true);
     }
   };
   const hasAccessToken = !!localStorage.getItem("access_token");
@@ -100,7 +100,7 @@ const CreateListingModal = () => {
                 <div className="mb-4">
                   <label
                     htmlFor="title"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-600"
                   >
                     Title
                   </label>
@@ -119,7 +119,7 @@ const CreateListingModal = () => {
                     htmlFor="deadline"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Deadline
+                    Duration
                   </label>
                   <input
                     type="date"
@@ -135,7 +135,7 @@ const CreateListingModal = () => {
                     htmlFor="media"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Media URL
+                    Media File
                   </label>
                   <input
                     type="text"

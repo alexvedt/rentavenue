@@ -3,7 +3,6 @@ import HomePage from "./pages/Home";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import ProfilePage from "./pages/Profile";
-import PostsPage from "./pages/Posts";
 import ListingPage from "./pages/Listing";
 import Root from "./App";
 
@@ -37,12 +36,6 @@ const myProfileRoute = new Route({
   component: ProfilePage,
 });
 
-const postsRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/posts",
-  component: PostsPage,
-});
-
 const ListingRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/listingitem/$listingId",
@@ -53,7 +46,6 @@ const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
   myProfileRoute,
-  postsRoute,
   ListingRoute,
   registerRoute,
 ]);
