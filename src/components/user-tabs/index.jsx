@@ -12,7 +12,6 @@ const UserProfileDetails = () => {
       try {
         const accessToken = localStorage.getItem("access_token");
 
-        // Use the user name stored in localStorage
         const userName = localStorage.getItem("user_name");
 
         if (!userName) {

@@ -41,7 +41,6 @@ const BidButton = () => {
       console.log("New Credits:", newCredits);
       console.log("Bid response:", bidData);
 
-      // Close the modal after a successful bid
       closeModal();
     } catch (error) {
       closeModal();
@@ -50,12 +49,13 @@ const BidButton = () => {
       window.location.reload(true);
     }
   };
+  const hasAccessToken = !!localStorage.getItem("access_token");
 
   return (
     <div>
-      <button onClick={() => openModal(listingId)}>Place Bid</button>
-
-      {/* Modal for placing bid */}
+      {hasAccessToken && (
+        <button onClick={() => openModal(listingId)}>Place Bid</button>
+      )}
       {isModalOpen && (
         <div className="modal-container">
           <dialog className="modal modal-bottom sm:modal-middle" open>
