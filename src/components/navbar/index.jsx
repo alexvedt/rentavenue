@@ -12,6 +12,7 @@ const Navigation = () => {
 
   const profileID = localStorage.getItem("user_name");
   const profileHref = `/profiles/${profileID}`;
+  const userCredits = localStorage.getItem("credits");
 
   const renderNavigationLinks = () => (
     <>
@@ -100,12 +101,8 @@ const Navigation = () => {
       <div className="navbar-end">
         <Link to={"/profile"}>
           <div className="avatar">
-            <div className="w-8 rounded-full">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/A-Cat.jpg/800px-A-Cat.jpg"
-                alt="User Avatar"
-              />
-            </div>
+            <div className="w-8 rounded-full"></div>
+            <p>${userCredits}</p>
           </div>
         </Link>
       </div>

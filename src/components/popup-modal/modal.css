@@ -1,16 +1,18 @@
 /* Modal.css */
 
 .modal-container {
+  display: block;
+  z-index: 9999;
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    background: rgba(0, 0, 0, 0.1); 
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(2px); /* Adjust the blur amount as needed */
+    backdrop-filter: blur(2px); 
 
   }
   
@@ -19,5 +21,4 @@
     border-radius: 8px;
   }
   
-  /* Add any additional styles as needed */
   

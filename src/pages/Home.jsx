@@ -6,17 +6,17 @@ import Navigation from "../components/navbar";
 import "../App.css";
 import ShuffleHero from "../components/explore-hero";
 import Modal from "../components/popup-modal";
+import FetchListings from "../components/listeditems";
+import CreateListingModal from "../components/creating-listing";
 
 function App() {
-  const [isLoggedIn, setLoggedIn] =
-    useState(/* Your logic to determine login status */);
+  const [isLoggedIn, setLoggedIn] = useState();
 
   const handleLogin = () => {
     setLoggedIn(true);
   };
 
   const handleLogout = () => {
-    // Your logout logic
     setLoggedIn(false);
   };
 
@@ -33,7 +33,9 @@ function App() {
       <main className="w-full px-8 py-12 items-center gap-8 max-w-6xl mx-auto">
         <Outlet />
         <ShuffleHero />
+        <CreateListingModal />
         <Modal />
+        <FetchListings />
       </main>
     </>
   );
