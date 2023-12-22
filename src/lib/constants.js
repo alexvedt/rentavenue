@@ -4,12 +4,12 @@
  * @link https://docs.noroff.dev/social-endpoints/posts
  */
 export const API_URL =
-  import.meta.env.VITE_API_URL || "https://api.noroff.dev/api/v1/social";
+  import.meta.env.VITE_API_URL || "https://api.noroff.dev/api/v1/auction";
 
 export const NAVIGATION = [
   { label: "Home", href: "/" },
   { label: "Profile", href: "/profile" },
-  { label: "Profiles", href: "/profiles" },
-  { label: "Posts", href: "/posts" },
+  { label: "Register", href: "/register" },
   { label: "Login", href: "/login" },
+  { label: "Listing", href: "/listing" },
 ];

@@ -1,11 +1,14 @@
-/**
- * Displays a single profile
- * @see https://docs.noroff.dev/social-endpoints/profiles
- */
+import Profile from "../components/profile";
+import Navigation from "../components/navbar";
 export default function ProfilePage() {
   return (
     <>
-      <h1>Profile Page</h1>
+      <header>
+        <Navigation />
+      </header>
+      <main>
+        <Profile />
+      </main>
     </>
   );
 }

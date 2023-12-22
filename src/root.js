@@ -2,10 +2,8 @@ import { Router, Route, RootRoute } from "@tanstack/react-router";
 import HomePage from "./pages/Home";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
-import ProfilesPage from "./pages/Profiles";
 import ProfilePage from "./pages/Profile";
-import PostsPage from "./pages/Posts";
-import PostPage from "./pages/Post";
+import ListingPage from "./pages/Listing";
 import Root from "./App";
 
 const rootRoute = new RootRoute({
@@ -32,44 +30,23 @@ const registerRoute = new Route({
   component: RegisterPage,
 });
 
-const profilesRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/profiles",
-  component: ProfilesPage,
-});
-
-const profileRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/profiles/$profileId",
-  component: ProfilesPage,
-});
-
 const myProfileRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "/profile",
+  path: "/profiles/$profileId",
   component: ProfilePage,
 });
 
-const postsRoute = new Route({
+const ListingRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "/posts",
-  component: PostsPage,
-});
-
-const postRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/posts/$postId",
-  component: PostPage,
+  path: "/listingitem/$listingId",
+  component: ListingPage,
 });
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
-  profilesRoute,
   myProfileRoute,
-  profileRoute,
-  postsRoute,
-  postRoute,
+  ListingRoute,
   registerRoute,
 ]);
 
