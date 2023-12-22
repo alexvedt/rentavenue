@@ -4,13 +4,10 @@ import { API_URL } from "../../lib/constants";
 const BidButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bidAmount, setBidAmount] = useState(0);
-  const [listingId, setListingId] = useState("");
-  const [showToast, setShowToast] = useState(false);
-  const [isSuccessfulBid, setIsSuccessfulBid] = useState(true);
-  const [toastMessage, setToastMessage] = useState("");
+  const [listingId, setListingId] = useState(""); // New state for listingId
 
   const openModal = (id) => {
-    setListingId(id);
+    setListingId(id); // Set the listingId when opening the modal
     setIsModalOpen(true);
   };
 
@@ -32,25 +29,25 @@ const BidButton = () => {
         }),
       };
 
-      // Place bid using fetch
       const bidResponse = await fetch(apiUrl, options);
-      console.log(bidResponse);
+      const bidData = await bidResponse.json();
+      console.log("Bid placed successfully:", bidResponse);
+
       const currentCredits = parseInt(localStorage.getItem("credits")) || 0;
       const newCredits = currentCredits - bidAmount;
       localStorage.setItem("credits", newCredits);
+      console.log("Current Credits:", currentCredits);
+      console.log("Bid Amount:", bidAmount);
+      console.log("New Credits:", newCredits);
+      console.log("Bid response:", bidData);
 
-      setShowToast(true);
-      setIsSuccessfulBid(true);
-      setToastMessage("Bid successfully placed!");
+      // Close the modal after a successful bid
       closeModal();
     } catch (error) {
+      closeModal();
       console.error("Error placing bid:", error);
-      setIsSuccessfulBid(false);
-      setToastMessage("Bid error. Please try again.");
     } finally {
-      setTimeout(() => {
-        setShowToast(true);
-      }, 3000);
+      window.location.reload(true);
     }
   };
 
@@ -83,18 +80,6 @@ const BidButton = () => {
               </div>
             </div>
           </dialog>
-        </div>
-      )}
-
-      {showToast && (
-        <div
-          className={`toast-top toast-end ${
-            isSuccessfulBid ? "alert-info" : "alert-error"
-          }`}
-        >
-          <div className="alert">
-            <span>{toastMessage}</span>
-          </div>
         </div>
       )}
     </div>
