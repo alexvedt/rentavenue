@@ -6,7 +6,7 @@ const CreateListingModal = () => {
   const [formData, setFormData] = useState({
     title: "",
     endsAt: date.toISOString().split("T")[0],
-    media: [],
+    media: [], // Change to an array to handle multiple files
     description: "",
   });
 
@@ -24,10 +24,21 @@ const CreateListingModal = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: name === "endsAt" ? formatDateString(value) : value,
     }));
+
+    // Handle multiple media files
+    if (name.startsWith("media")) {
+      const index = parseInt(name.replace("media", ""), 10);
+      setFormData((prevFormData) => {
+        const updatedMedia = [...prevFormData.media];
+        updatedMedia[index] = value;
+        return { ...prevFormData, media: updatedMedia };
+      });
+    }
   };
 
   const formatDateString = (dateString) => {
@@ -43,8 +54,6 @@ const CreateListingModal = () => {
       setIsLoading(true);
       const accessToken = localStorage.getItem("access_token");
 
-      JSON.stringify(formData);
-
       const response = await fetch(`${API_URL}/listings`, {
         method: "POST",
         headers: {
@@ -54,9 +63,7 @@ const CreateListingModal = () => {
         body: JSON.stringify({
           title: formData.title,
           endsAt: formData.endsAt,
-          media: Array.isArray(formData.media)
-            ? formData.media
-            : [formData.media],
+          media: formData.media,
           description: formData.description,
         }),
       });
@@ -82,6 +89,7 @@ const CreateListingModal = () => {
       window.location.reload(true);
     }
   };
+
   const hasAccessToken = !!localStorage.getItem("access_token");
 
   return (
@@ -130,22 +138,24 @@ const CreateListingModal = () => {
                     required
                   />
                 </div>
-                <div className="mb-4">
-                  <label
-                    htmlFor="media"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Media File
-                  </label>
-                  <input
-                    type="text"
-                    id="media"
-                    name="media"
-                    value={formData.media}
-                    onChange={handleChange}
-                    className="mt-1 p-2 w-full border rounded-md"
-                  />
-                </div>
+                {[...Array(3)].map((_, index) => (
+                  <div key={index} className="mb-4">
+                    <label
+                      htmlFor={`media${index}`}
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Media File {index + 1}
+                    </label>
+                    <input
+                      type="text"
+                      id={`media${index}`}
+                      name={`media${index}`}
+                      value={formData.media[index] || ""}
+                      onChange={handleChange}
+                      className="mt-1 p-2 w-full border rounded-md"
+                    />
+                  </div>
+                ))}
                 <div className="mb-4">
                   <label
                     htmlFor="description"
