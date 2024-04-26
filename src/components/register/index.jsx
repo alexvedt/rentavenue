@@ -36,7 +36,8 @@ function RegisterForm() {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
-    const { email, password, name, avatar } = event.target.elements;
+    const { email, password, name, avatar, venueManager } =
+      event.target.elements;
 
     let fieldErrors = {};
 
@@ -68,6 +69,7 @@ function RegisterForm() {
       email: email.value,
       password: password.value,
       avatar: avatar.value,
+      venueManager: venueManager.checked,
     };
 
     setIsLoading(true);
@@ -90,6 +92,7 @@ function RegisterForm() {
         localStorage.setItem("email", email.value);
         localStorage.setItem("avatar", avatar.value);
         localStorage.setItem("user_name", name.value);
+        localStorage.setItem("venueManager", venueManager.checked);
         navigateToHome();
       } else {
         if (response.status === 400 || response.status === 409) {
@@ -204,6 +207,23 @@ function RegisterForm() {
               {error.avatar && (
                 <p className="text-red-500 text-xs mt-2">{error.avatar}</p>
               )}
+            </div>
+
+            <div>
+              <div className="flex flex-column items-center justify-between">
+                <label
+                  htmlFor="avatar"
+                  className="block text-sm font-medium leading-6 text-custom-aqua"
+                >
+                  Venue manager? (Optional)
+                </label>{" "}
+                <input
+                  type="checkbox"
+                  name="venueManager"
+                  id="venueManager"
+                  className="rounded-md border-0 px-1 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
             </div>
 
             <div>

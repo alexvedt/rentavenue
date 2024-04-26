@@ -4,10 +4,13 @@ import handleLogout from "../logout";
 
 const Navigation = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isVenueManager, setIsVenueManager] = useState(false); // New state for venue manager
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
+    const venueManager = localStorage.getItem("venueManager") === "true"; // Check if 'venueManager' is "true"
     setIsLoggedIn(!!accessToken);
+    setIsVenueManager(venueManager); // Set venue manager status
   }, []);
 
   const profileID = localStorage.getItem("user_name");
@@ -31,6 +34,16 @@ const Navigation = () => {
               Profile
             </Link>
           </li>
+          {isVenueManager && ( // Only show if isVenueManager is true
+            <li>
+              <Link
+                to={"/manage-venues"}
+                className="hover:bg-background-500 hover:text-white"
+              >
+                Manage Venues
+              </Link>
+            </li>
+          )}
           <li>
             <Link
               to={"/login"}
@@ -65,7 +78,7 @@ const Navigation = () => {
   );
 
   return (
-    <div className="navbar bg-accent-500">
+    <div className="navbar ">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
