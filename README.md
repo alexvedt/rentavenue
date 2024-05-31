@@ -17,8 +17,7 @@ Make sure you have the following installed on your machine:
 
 ### Installation
 
-git clone https://github.com/your-username/your-project.git
-cd your-project
+gh repo clone alexvedt/semester-project-2
 npm install
 
 
@@ -42,3 +41,6 @@ src/: Contains the source code for the project.
 components/: React components.
 styles/: Stylesheets.
 App.jsx: Main application component.
+
+### Live demo
+https://markedz.netlify.app/
