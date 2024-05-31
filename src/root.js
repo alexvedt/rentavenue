@@ -4,6 +4,7 @@ import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import ProfilePage from "./pages/Profile";
 import ListingPage from "./pages/Listing";
+import ManageVenues from "./pages/ManageVenues";
 import Root from "./App";
 
 const rootRoute = new RootRoute({
@@ -38,8 +39,14 @@ const myProfileRoute = new Route({
 
 const ListingRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "/listingitem/$listingId",
+  path: "/singlevenue",
   component: ListingPage,
+});
+
+const manageVenuesRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/manage-venues",
+  component: ManageVenues,
 });
 
 const routeTree = rootRoute.addChildren([
@@ -48,6 +55,7 @@ const routeTree = rootRoute.addChildren([
   myProfileRoute,
   ListingRoute,
   registerRoute,
+  manageVenuesRoute,
 ]);
 
 export const router = new Router({ routeTree });

@@ -4,10 +4,9 @@ import { useState } from "react";
 import { Outlet } from "@tanstack/react-router";
 import Navigation from "../components/navbar";
 import "../App.css";
-import ShuffleHero from "../components/explore-hero";
 import Modal from "../components/popup-modal";
 import FetchListings from "../components/listeditems";
-import CreateListingModal from "../components/creating-listing";
+import AuroraHero from "../components/explore-hero";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState();
@@ -28,12 +27,10 @@ function App() {
           onLogin={handleLogin}
           onLogout={handleLogout}
         />
-      </header>
-
+        <AuroraHero />
+      </header>{" "}
       <main className="w-full px-8 py-12 items-center gap-8 max-w-6xl mx-auto">
         <Outlet />
-        <ShuffleHero />
-        <CreateListingModal />
         <Modal />
         <FetchListings />
       </main>
