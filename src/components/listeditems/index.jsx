@@ -21,6 +21,10 @@ export default function FetchVenues() {
         setError(null);
 
         const accessToken = localStorage.getItem("access_token");
+        const apiKey = localStorage.setItem(
+          "apiKey",
+          "0524f5f9-3062-4087-a04f-3893f8205295"
+        );
         const url = new URL(
           `${API_URL}/venues?&_active=true&sort=created&order=desc`
         );
@@ -28,6 +32,7 @@ export default function FetchVenues() {
         const venueResponse = await fetch(url, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
+            "X-Noroff-API-Key": apiKey,
           },
         });
 

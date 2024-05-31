@@ -13,7 +13,7 @@ export const NAVIGATION = [
 
 //* Specific venue:
 
-export async function fetchVenueById(venueId) {
+async function fetchVenueById(venueId) {
   const url = new URL(`${API_URL}/${venueId}`);
   url.searchParams.append("_owner", "true");
   url.searchParams.append("_bookings", "true");
@@ -28,3 +28,4 @@ export async function fetchVenueById(venueId) {
     throw new Error(error);
   }
 }
+export default fetchVenueById;

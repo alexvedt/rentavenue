@@ -25,13 +25,11 @@ const Modal = () => {
     <div className="modal-container">
       <dialog className="modal modal-bottom sm:modal-middle" open>
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">
-            It looks like you are not logged into your account.
-          </p>
+          <h3 className="font-bold text-lg">Welcome!</h3>
+          <p className="py-4">You are not logged in.</p>
           <p>
-            Don´t worry, you´ll still be able to browse listings. But if you
-            want to do more, you´ll have to log in first.
+            Don´t worry, you´ll still be able to browse venues. But if you want
+            to do more, you´ll have to log in first.
           </p>
 
           <div className="modal-action">

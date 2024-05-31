@@ -44,8 +44,8 @@ function LoginForm() {
         setIsSuccess(true);
         localStorage.setItem("access_token", data.data.accessToken);
         localStorage.setItem("user_name", data.data.name);
+        localStorage.setItem("apiKey", "0524f5f9-3062-4087-a04f-3893f8205295");
 
-        // Logger for å sikre at token og brukerinfo er lagret
         console.log(
           "Access Token in Local Storage:",
           localStorage.getItem("access_token")
@@ -55,9 +55,8 @@ function LoginForm() {
           localStorage.getItem("user_name")
         );
 
-        navigate("/"); // Omdiriger brukeren umiddelbart til hjemmesiden
+        navigate("/");
       } else {
-        // Håndtering av ulike feiltilfeller
         if (res.status === 401) {
           setError({ password: "Invalid Password" });
         } else if (data.message === "Username not found") {
@@ -103,7 +102,7 @@ function LoginForm() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-custom-aqua"
+                className="block text-sm font-medium leading-6 text-white"
               >
                 Email address
               </label>
@@ -115,7 +114,7 @@ function LoginForm() {
                   type="email"
                   autoComplete="email"
                   required
-                  defaultValue="first.last@stud.noroff.no"
+                  defaultValue=""
                   className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -126,7 +125,7 @@ function LoginForm() {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-custom-aqua"
+                  className="block text-sm font-medium leading-6 text-white"
                 >
                   Password
                 </label>

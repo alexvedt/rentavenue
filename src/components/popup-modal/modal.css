@@ -8,11 +8,12 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.1); 
+    background: rgb(244, 244, 244); 
     display: flex;
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(2px); 
+    color: red;
 
   }
   

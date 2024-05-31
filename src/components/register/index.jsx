@@ -110,12 +110,7 @@ function RegisterForm() {
   return (
     <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 bg-custom lg:px-8 card w-full max-w-[100%] h-[300px] md:h-auto  glass">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="w-auto h-10 mx-auto"
-          src="../src/assets/NoHoverLogo.svg"
-          alt="Your Company"
-        />
-        <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-custom-aqua">
+        <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center color-white	">
           Make a new account
         </h2>
       </div>
@@ -123,7 +118,7 @@ function RegisterForm() {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         {isSuccess ? (
           <section>
-            <p className="text-center text-green-600">
+            <p className="text-center text-white color-white">
               Welcome {localStorage.getItem("user_name")}. You will now redirect
               to the login page!
             </p>
@@ -133,7 +128,7 @@ function RegisterForm() {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium leading-6 text-custom-aqua"
+                className="block text-sm font-medium leading-6 text-"
               >
                 Name
               </label>
@@ -145,10 +140,8 @@ function RegisterForm() {
                   type="text"
                   autoComplete="name"
                   required
-                  defaultValue={`RandomUser_${Math.floor(
-                    Math.random() * 10000000
-                  )}`}
-                  className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  defaultValue=""
+                  className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-white-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
               {error.name && (
@@ -174,7 +167,7 @@ function RegisterForm() {
                   defaultValue={`${Math.floor(
                     Math.random() * 9999999
                   )}-last@stud.noroff.no`}
-                  className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-white- focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
               {error.email && (
@@ -196,7 +189,7 @@ function RegisterForm() {
                   name="avatar"
                   type="text"
                   autoComplete="avatar"
-                  className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-1 block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-white-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
               {error.avatar && (
@@ -238,7 +231,7 @@ function RegisterForm() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  defaultValue="UzI1NiIsInR5cCI"
+                  defaultValue=""
                   className="block w-full rounded-md border-0 px-1 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

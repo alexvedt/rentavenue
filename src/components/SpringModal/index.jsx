@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { AnimatePresence, motion } from "framer-motion";
-import { FiAlertCircle } from "react-icons/fi";
 
 const SpringModal = ({ isOpen, onClose, children }) => {
   return (
@@ -20,7 +19,6 @@ const SpringModal = ({ isOpen, onClose, children }) => {
             onClick={(e) => e.stopPropagation()}
             className="bg-gradient-to-br from-violet-600 to-indigo-600 text-white p-6 rounded-lg w-full max-w-lg shadow-xl cursor-default relative overflow-hidden"
           >
-            <FiAlertCircle className="text-white/10 rotate-12 text-[250px] absolute z-0 -top-24 -left-24" />
             <div className="relative z-10">{children}</div>
           </motion.div>
         </motion.div>

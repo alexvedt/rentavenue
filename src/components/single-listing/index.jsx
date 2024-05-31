@@ -139,7 +139,7 @@ const ListingItem = () => {
           <input
             type="number"
             value={guests}
-            onChange={(e) => setGuests(e.target.value)}
+            onChange={(e) => setGuests(Number(e.target.value))}
             min="1"
             max={listing?.maxGuests}
             className="input"

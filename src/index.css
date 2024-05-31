@@ -8,9 +8,10 @@
   line-height: 1.5;
   font-weight: 400;
   
+  
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255);
   background-color: #dcdcdc;
   color: rgb(46, 46, 46);
 
@@ -62,4 +63,17 @@ footer {
 .menu li > *:not(ul):not(.menu-title):not(details).active,
 .menu li > details > summary:active {
   background-color: #252525;
+}
+.input-field {
+  color: white;
+  background-color: rgb(132, 102, 102);
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0 1px #d1d5db;
+}
+
+.input-field:focus {
+  box-shadow: 0 0 0 2px #6366f1;
 }
