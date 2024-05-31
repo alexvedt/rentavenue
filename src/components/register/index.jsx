@@ -68,29 +68,24 @@ function RegisterForm() {
       name: name.value,
       email: email.value,
       password: password.value,
-      avatar: avatar.value,
       venueManager: venueManager.checked,
     };
 
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        "https://api.noroff.dev/api/v1/auction/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        }
-      );
+      const response = await fetch("https://v2.api.noroff.dev/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
 
       const data = await response.json();
       if (response.ok) {
         setIsSuccess(true);
         localStorage.setItem("email", email.value);
-        localStorage.setItem("avatar", avatar.value);
         localStorage.setItem("user_name", name.value);
         localStorage.setItem("venueManager", venueManager.checked);
         navigateToHome();

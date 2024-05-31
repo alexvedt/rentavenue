@@ -7,10 +7,12 @@
   font-family: "Vazirmatn", sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #393c3c;
+  background-color: #dcdcdc;
+  color: rgb(46, 46, 46);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

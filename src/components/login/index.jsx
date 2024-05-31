@@ -26,21 +26,38 @@ function LoginForm() {
     console.log("Request Payload:", payload);
 
     try {
-      const res = await fetch(
-        "https://api.noroff.dev/api/v1/auction/auth/login",
-        {
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        }
-      );
+      const res = await fetch("https://v2.api.noroff.dev/auth/login", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
 
       const data = await res.json();
       console.log("API Response:", data);
 
-      if (!res.ok) {
+      if (res.ok) {
+        console.log("API Response:", data);
+        setData(data.data);
+        console.log(data);
+        setIsSuccess(true);
+        localStorage.setItem("access_token", data.data.accessToken);
+        localStorage.setItem("user_name", data.data.name);
+
+        // Logger for å sikre at token og brukerinfo er lagret
+        console.log(
+          "Access Token in Local Storage:",
+          localStorage.getItem("access_token")
+        );
+        console.log(
+          "User Name in Local Storage:",
+          localStorage.getItem("user_name")
+        );
+
+        navigate("/"); // Omdiriger brukeren umiddelbart til hjemmesiden
+      } else {
+        // Håndtering av ulike feiltilfeller
         if (res.status === 401) {
           setError({ password: "Invalid Password" });
         } else if (data.message === "Username not found") {
@@ -50,26 +67,7 @@ function LoginForm() {
         } else {
           setError({ general: "An unexpected error occurred." });
         }
-        return;
       }
-
-      if (typeof data.accessToken === "undefined") {
-        setError({ message: "Access token is not provided." });
-        return;
-      }
-
-      localStorage.setItem("access_token", data.accessToken);
-      localStorage.setItem("user_name", data.name);
-      localStorage.setItem("credits", data.credits);
-      localStorage.setItem("avatar", data.avatar);
-      console.log(
-        "Access Token in Local Storage:",
-        localStorage.getItem("access_token")
-      );
-      console.log(
-        "User Name in Local Storage:",
-        localStorage.getItem("user_name")
-      );
 
       setData(data);
       setIsSuccess(res.ok);
@@ -155,7 +153,7 @@ function LoginForm() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-custom-aqua px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                {isLoading ? "signing in" : "Sign in"}
+                {isLoading ? "Signing in" : "Sign in"}
               </button>
             </div>
           </form>

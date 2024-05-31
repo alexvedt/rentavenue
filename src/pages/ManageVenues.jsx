@@ -1,5 +1,5 @@
 import Navigation from "../components/navbar";
-
+import ManageVenues from "../components/creating-listing/";
 export default function SingleItem() {
   return (
     <>
@@ -7,7 +7,7 @@ export default function SingleItem() {
         <Navigation />
       </header>
       <section>
-        <h1>hi</h1>{" "}
+        <ManageVenues />
       </section>
     </>
   );

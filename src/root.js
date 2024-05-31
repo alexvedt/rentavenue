@@ -39,7 +39,7 @@ const myProfileRoute = new Route({
 
 const ListingRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "/listingitem/$listingId",
+  path: "/singlevenue",
   component: ListingPage,
 });
 

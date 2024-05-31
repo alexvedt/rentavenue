@@ -1,122 +1,36 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../../lib/constants";
-import { useParams } from "@tanstack/react-router";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const formatRemainingTime = (endsAt) => {
-  const currentTime = new Date();
-  const endTime = new Date(endsAt);
-  const timeDifference = endTime - currentTime;
-
-  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-
-  let formattedTime = "";
-  if (days > 0) {
-    formattedTime += `${days} days `;
-  }
-  if (hours > 0) {
-    formattedTime += `${hours} hours `;
-  }
-  if (minutes > 0) {
-    formattedTime += `${minutes} minutes`;
-  }
-
-  return formattedTime.trim();
-};
-
-export default function ListingItem() {
-  const [listing, setListing] = useState();
+const ListingItem = () => {
+  const [listing, setListing] = useState(null); // Ensure initial state is null
   const [error, setError] = useState(null);
-  const { listingId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bidAmount, setBidAmount] = useState(0);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-  const handleBid = async () => {
-    try {
-      const apiUrl = `${API_URL}/listings/${listingId}/bids`;
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-        body: JSON.stringify({
-          amount: Number(bidAmount),
-        }),
-      };
-
-      const bidResponse = await fetch(apiUrl, options);
-      console.log(bidResponse, "bidResponse");
-
-      if (!bidResponse.ok) {
-        const errorData = await bidResponse.json();
-        console.error("Error placing bid:", errorData);
-
-        return;
-      }
-      const bidData = await bidResponse.json();
-
-      console.log("Bid response:", bidData);
-
-      closeModal();
-    } catch (error) {
-      console.error("Error placing bid:", error);
-    }
-  };
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [guests, setGuests] = useState(1);
 
   useEffect(() => {
-    const fetchListing = async () => {
+    const fetchVenue = async () => {
       try {
-        const accessToken = localStorage.getItem("access_token");
-        const url = new URL(`${API_URL}/listings/${listingId}`);
-        url.searchParams.append("_seller", "true");
-        url.searchParams.append("_bids", "true");
+        setIsLoading(true);
+        const params = new URLSearchParams(window.location.search);
+        const venueId = params.get("venueId");
+        const url = new URL(`${API_URL}/venues/${venueId}`);
+        console.log(venueId, "venueid");
 
-        const response = await fetch(url.href, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await fetch(url.href);
+        console.log(response, "response");
 
-        if (response.status === 400) {
-          setError({ message: "Listing not found" });
-        } else {
-          const data = await response.json();
-
-          const formattedListing = {
-            ...data,
-            endsAt: new Date(data.endsAt).toLocaleString("en-US", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "numeric",
-              minute: "numeric",
-              hour12: false,
-            }),
-            created: new Date(data.created).toLocaleString("en-US", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "numeric",
-              minute: "numeric",
-              hour12: false,
-            }),
-          };
-
-          setListing(formattedListing);
+        if (!response.ok) {
+          throw new Error("Failed to fetch venue");
         }
+
+        const data = await response.json();
+        setListing(data.data);
+        console.log(data, "data");
       } catch (error) {
         setError(error);
       } finally {
@@ -124,109 +38,127 @@ export default function ListingItem() {
       }
     };
 
-    fetchListing();
-  }, [listingId]);
+    fetchVenue();
+  }, []);
 
-  if (isLoading) return <h1>Loading...</h1>;
-  if (error) return <h1>No listing found. {error?.message}</h1>;
+  useEffect(() => {
+    if (startDate && endDate && listing) {
+      const diffTime = Math.abs(endDate - startDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      setTotalPrice(diffDays * listing.price);
+    }
+  }, [startDate, endDate, listing]);
 
-  const latestBidAmount =
-    listing?.bids?.length > 0
-      ? Math.max(...listing.bids.map((bid) => bid.amount))
-      : 0;
-  const getRemainingTime = () => {
-    return formatRemainingTime(listing?.endsAt);
+  const handleBooking = async () => {
+    try {
+      const response = await fetch(`${API_URL}/bookings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "X-Noroff-API-Key": localStorage.getItem("apiKey"),
+        },
+        body: JSON.stringify({
+          dateFrom: startDate.toISOString(),
+          dateTo: endDate.toISOString(),
+          guests,
+          venueId: listing.id,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create booking");
+      }
+
+      const data = await response.json();
+      alert(`Booking successful! Booking ID: ${data.data.id}`);
+    } catch (error) {
+      alert(`Booking failed: ${error.message}`);
+    }
   };
 
+  if (isLoading) return <h1>Loading...</h1>;
+  if (error || !listing) return <h1>No listing found. {error?.message}</h1>;
+
   return (
-    <>
-      <div className="container mx-auto flex items-center justify-center h-screen">
-        <div className="w-full lg:w-2/5">
-          <img
-            src={listing?.media[0] || "https://source.unsplash.com/MP0IUfwrn0A"}
-            className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
-            alt="Profile"
+    <div className="container mx-auto flex flex-col items-center justify-center h-screen">
+      <div className="w-full lg:w-2/5 mb-8">
+        <img
+          src={
+            listing?.media[0]?.url || "https://source.unsplash.com/MP0IUfwrn0A"
+          }
+          className="rounded-lg shadow-2xl w-full"
+          alt={listing?.media[0]?.alt || "Venue Image"}
+        />
+      </div>
+      <div className="w-full lg:w-3/5 rounded-lg shadow-2xl bg-white opacity-75 p-6">
+        <h1 className="text-3xl font-bold text-center uppercase">
+          {listing?.name || "Unknown Title"}
+        </h1>
+        <div className="mx-auto pt-3 border-b-2 border-text-500 opacity-25"></div>
+        <div className="flex flex-col items-center mt-4">
+          <p className="pt-2">
+            Address: {listing?.location?.address || "Unknown Address"},{" "}
+            {listing?.location?.city || "Unknown City"}
+          </p>
+          <p className="pt-2">
+            Country: {listing?.location?.country || "Unknown Country"}
+          </p>
+          <p className="pt-2">Price: ${listing?.price || "Unknown Price"}</p>
+          <p className="pt-2">Max Guests: {listing?.maxGuests || "Unknown"}</p>
+          <p className="pt-2">Rating: {listing?.rating || "Unknown"}</p>
+        </div>
+        <div className="p-4 rounded-lg shadow-lg text-center">
+          <p className="mb-4">{listing?.description}</p>
+        </div>
+        <div className="mb-4">
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            placeholderText="Start Date"
+            className="input"
+          />
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            placeholderText="End Date"
+            className="input"
           />
         </div>
-        <div className="w-full  lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
-          <div className="p-4 md:p-12 text-center lg:text-left">
-            <div
-              className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
-              style={{
-                backgroundImage: `url('${
-                  listing?.media[0] || "https://source.unsplash.com/MP0IUfwrn0A"
-                }')`,
-              }}
-            ></div>
-
-            <h1 className="text-3xl font-bold pt-8 lg:pt-0 text-center uppercase">
-              {listing?.title || "Unknown Title"}
-            </h1>
-            <div className="mx-auto lg:mx-0 pt-3s border-b-2 border-text-500 opacity-25"></div>
-            <div className="flex flex-col items-center">
-              <div className=" flex rounded-full w-28  justify-center">
-                {listing?.seller?.avatar && (
-                  <img
-                    src={listing.seller.avatar}
-                    alt="Seller Avatar"
-                    className="justify-center"
-                  />
-                )}
-              </div>
-              <p className="pt-2">
-                Seller: {listing?.seller?.name || "Unknown Seller"}
-              </p>
-
-              {isModalOpen && (
-                <div className="modal-container">
-                  <dialog className="modal modal-middle sm:modal-middle" open>
-                    <div className="modal-box">
-                      <h3 className="font-bold text-lg">Place Bid</h3>
-                      <label>
-                        Bid Amount:
-                        <input
-                          type="number"
-                          value={bidAmount}
-                          onChange={(e) => setBidAmount(e.target.value)}
-                          placeholder={`Must be higher than ${latestBidAmount}`}
-                          className="input w-full max-w-xs"
-                        />
-                      </label>
-
-                      <div className="modal-action">
-                        <form method="dialog">
-                          <button className="btn" onClick={handleBid}>
-                            Submit Bid
-                          </button>
-                          <button className="btn" onClick={closeModal}>
-                            Close
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  </dialog>
-                </div>
-              )}
-            </div>
-            <div className="card p-4 rounded-lg shadow-lg text-center">
-              <p className="mb-4">{listing?.description}</p>
-              <div className="flex flex-row">
-                <p className="text-lg font-semibold mb-2">
-                  Leading bid: $ {latestBidAmount}
-                </p>
-              </div>
-
-              <button
-                className="btn bg-text-500 text-text-900 py-2 px-4 rounded-full"
-                onClick={openModal}
-              >
-                Place Bid
-              </button>
-              <p className="mt-4">Ends in {getRemainingTime()}</p>
-            </div>
-          </div>
+        <div className="mb-4">
+          <label className="block mb-2">
+            <strong>Guests:</strong>
+          </label>
+          <input
+            type="number"
+            value={guests}
+            onChange={(e) => setGuests(e.target.value)}
+            min="1"
+            max={listing?.maxGuests}
+            className="input"
+          />
         </div>
+        <div className="mb-4">
+          <p className="text-xl">
+            <strong>Total Price:</strong> ${totalPrice}
+          </p>
+        </div>
+        <button
+          className="btn bg-text-500 text-text-900 py-2 px-4 rounded-full"
+          onClick={handleBooking}
+        >
+          Book Now
+        </button>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default ListingItem;

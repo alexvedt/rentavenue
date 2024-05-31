@@ -15,7 +15,6 @@ const Navigation = () => {
 
   const profileID = localStorage.getItem("user_name");
   const profileHref = `/profiles/${profileID}`;
-  const userCredits = localStorage.getItem("credits");
 
   const renderNavigationLinks = () => (
     <>
@@ -105,7 +104,7 @@ const Navigation = () => {
           </ul>
         </div>
         <Link to={"/"}>
-          <a className="btn btn-ghost text-xl">marketZ</a>
+          <a className="btn btn-ghost text-xl">zVenue</a>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -115,7 +114,6 @@ const Navigation = () => {
         <Link to={"/profile"}>
           <div className="avatar">
             <div className="w-8 rounded-full"></div>
-            <p>${userCredits}</p>
           </div>
         </Link>
       </div>
